@@ -17,13 +17,13 @@ export function Hero() {
                         Predict Valorant Match Outcomes
                         </h1>
                         <p className="mx-auto max-w-[700px] text-primary-foreground/80 md:text-xl">
-                        Leverage our advanced machine learning models to predict the win probability for any Valorant match.
-                        Get insights to improve your team's strategy and performance.
+                        Leverage our machine learning model to predict the win probability for any Valorant match.
+                        Tell your team how cooked you guys are. 😂
                         </p>
                     </div>
                     <div className="hidden md:block">
                         <img
-                        src="/placeholder.svg"
+                        src="/hero-image.svg"
                         width="550"
                         height="310"
                         alt="Valorant"
