@@ -46,7 +46,7 @@ export function Form() {
             Valorant Match Prediction
           </h2>
           <p className="max-w-[900px] mx-auto text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-            Enter the details of your current Valorant match and get the predicted win probability for each team.
+            Enter the details of your Valorant match and get the predicted win probability for each team.
           </p>
         </div>
         <form onSubmit={handleSubmit} className="mx-auto max-w-2xl w-full grid gap-6">
@@ -55,7 +55,7 @@ export function Form() {
               <Label htmlFor="team1Loadout">Team 1 Loadout</Label>
               <Select value={formData.team1Loadout} onValueChange={(value) => handleSelectChange('team1Loadout', value)}>
                 <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select team 1 loadout" />
+                  <SelectValue placeholder="Select Team 1 Loadout" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
@@ -71,7 +71,7 @@ export function Form() {
               <Label htmlFor="team2Loadout">Team 2 Loadout</Label>
               <Select value={formData.team2Loadout} onValueChange={(value) => handleSelectChange('team2Loadout', value)}>
                 <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select team 2 loadout" />
+                  <SelectValue placeholder="Select Team 2 Loadout" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
@@ -87,11 +87,11 @@ export function Form() {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <Label htmlFor="team1Rounds">Team 1 Rounds Won</Label>
-              <Input id="team1Rounds" type="number" value={formData.team1Rounds} onChange={handleChange} placeholder="Enter team 1 rounds won" className="mt-1" />
+              <Input id="team1Rounds" type="number" value={formData.team1Rounds} onChange={handleChange} placeholder="Enter Team 1's Rounds Won" className="mt-1" />
             </div>
             <div>
               <Label htmlFor="team2Rounds">Team 2 Rounds Won</Label>
-              <Input id="team2Rounds" type="number" value={formData.team2Rounds} onChange={handleChange} placeholder="Enter team 2 rounds won" className="mt-1" />
+              <Input id="team2Rounds" type="number" value={formData.team2Rounds} onChange={handleChange} placeholder="Enter Team 2's Rounds Won" className="mt-1" />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
@@ -113,10 +113,6 @@ export function Form() {
                 </SelectContent>
               </Select>
             </div>
-          </div>
-          <div>
-            <Label htmlFor="notes">Additional Notes</Label>
-            <Textarea id="notes" value={formData.notes} onChange={handleChange} placeholder="Enter any additional details" className="mt-1" />
           </div>
           <div className="flex justify-center">
             <Button type="submit" className="bg-primary text-primary-foreground hover:bg-primary/90">
