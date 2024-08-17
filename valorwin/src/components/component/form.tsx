@@ -134,12 +134,16 @@ export function Form() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectItem value="bind">Bind</SelectItem>
-                    <SelectItem value="haven">Haven</SelectItem>
-                    <SelectItem value="split">Split</SelectItem>
-                    <SelectItem value="ascent">Ascent</SelectItem>
-                    <SelectItem value="icebox">Icebox</SelectItem>
-                    <SelectItem value="breeze">Breeze</SelectItem>
+                    <SelectItem value="Ascent">Ascent</SelectItem>
+                    <SelectItem value="Bind">Bind</SelectItem>
+                    <SelectItem value="Breeze">Breeze</SelectItem>
+                    <SelectItem value="Fracture">Fracture</SelectItem>
+                    <SelectItem value="Haven">Haven</SelectItem>
+                    <SelectItem value="Icebox">Icebox</SelectItem>
+                    <SelectItem value="Lotus">Lotus</SelectItem>
+                    <SelectItem value="Pearl">Pearl</SelectItem>
+                    <SelectItem value="Split">Split</SelectItem>
+                    <SelectItem value="Sunset">Sunset</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
