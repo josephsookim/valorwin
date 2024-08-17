@@ -1,6 +1,6 @@
 import requests
 
-url = "http://127.0.0.1:5000/predict"
+url = "https://valorwin.onrender.com/predict"
 data = {
     "team_score": 9,
     "enemy_score": 9,
