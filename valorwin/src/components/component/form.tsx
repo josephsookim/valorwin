@@ -17,8 +17,6 @@ export function Form() {
     notes: ''
   });
 
-  const [errors, setErrors] = useState<string[]>([]);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
     setFormData(prevState => ({
@@ -34,30 +32,66 @@ export function Form() {
     }));
   };
 
-  const validateForm = () => {
-    const errorList = [];
-
-    if (!formData.team1Loadout) errorList.push("Team 1 Loadout is required.");
-    if (!formData.team2Loadout) errorList.push("Team 2 Loadout is required.");
-    if (!formData.team1Rounds) errorList.push("Team 1 Rounds Won is required.");
-    if (!formData.team2Rounds) errorList.push("Team 2 Rounds Won is required.");
-    if (!formData.map) errorList.push("Map selection is required.");
-
-    return errorList;
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const validationErrors = validateForm();
     
-    if (validationErrors.length > 0) {
-      setErrors(validationErrors);
-    } else {
-      setErrors([]);
-      // Proceed with form submission, e.g., send data to a backend.
-      console.log('Form data submitted:', formData);
+    // Create the data object based on form data
+    const data = {
+      team_score: parseInt(formData.team1Rounds, 10),
+      enemy_score: parseInt(formData.team2Rounds, 10),
+      team_loadout_eco: formData.team1Loadout === "team_loadout_eco",
+      team_loadout_full_buy: formData.team1Loadout === "team_loadout_full_buy",
+      team_loadout_semi_buy: formData.team1Loadout === "team_loadout_semi_buy",
+      team_loadout_semi_eco: formData.team1Loadout === "team_loadout_semi_eco",
+      enemy_loadout_eco: formData.team2Loadout === "team_loadout_eco",
+      enemy_loadout_full_buy: formData.team2Loadout === "team_loadout_full_buy",
+      enemy_loadout_semi_buy: formData.team2Loadout === "team_loadout_semi_buy",
+      enemy_loadout_semi_eco: formData.team2Loadout === "team_loadout_semi_eco",
+      map_name_Ascent: formData.map === "ascent",
+      map_name_Bind: formData.map === "bind",
+      map_name_Breeze: formData.map === "breeze",
+      map_name_Fracture: formData.map === "fracture",
+      map_name_Haven: formData.map === "haven",
+      map_name_Icebox: formData.map === "icebox",
+      map_name_Lotus: formData.map === "lotus",
+      map_name_Pearl: formData.map === "pearl",
+      map_name_Split: formData.map === "split",
+      map_name_Sunset: formData.map === "sunset",
+    };
+
+    // Call the getPrediction function with the data
+    const predictionResult = await getPrediction(data);
+
+    if (predictionResult) {
+      console.log("Prediction result:", predictionResult);
+      // You can update the UI with the prediction result here
     }
   };
+
+  // Prediction Request Function
+async function getPrediction(data: Record<string, any>) {
+  const url = "https://valorwin.onrender.com/predict";
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error("Error fetching prediction:", error);
+    return null;
+  }
+}
 
   return (
     <section id="prediction-tool" className="w-full py-12 md:py-24 lg:py-32 bg-muted">
@@ -71,16 +105,6 @@ export function Form() {
           </p>
         </div>
         <form onSubmit={handleSubmit} className="mx-auto max-w-2xl w-full grid gap-6">
-          {errors.length > 0 && (
-            <div className="bg-red-100 text-red-700 p-4 rounded mb-4">
-              Errors:
-              <ul>
-                {errors.map((error, index) => (
-                  <li key={index}>{error}</li>
-                ))}
-              </ul>
-            </div>
-          )}
           <div className="grid grid-cols-2 gap-4">
             <div>
               <Label htmlFor="team1Loadout">Team 1 Loadout</Label>
@@ -134,16 +158,12 @@ export function Form() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectItem value="Ascent">Ascent</SelectItem>
-                    <SelectItem value="Bind">Bind</SelectItem>
-                    <SelectItem value="Breeze">Breeze</SelectItem>
-                    <SelectItem value="Fracture">Fracture</SelectItem>
-                    <SelectItem value="Haven">Haven</SelectItem>
-                    <SelectItem value="Icebox">Icebox</SelectItem>
-                    <SelectItem value="Lotus">Lotus</SelectItem>
-                    <SelectItem value="Pearl">Pearl</SelectItem>
-                    <SelectItem value="Split">Split</SelectItem>
-                    <SelectItem value="Sunset">Sunset</SelectItem>
+                    <SelectItem value="bind">Bind</SelectItem>
+                    <SelectItem value="haven">Haven</SelectItem>
+                    <SelectItem value="split">Split</SelectItem>
+                    <SelectItem value="ascent">Ascent</SelectItem>
+                    <SelectItem value="icebox">Icebox</SelectItem>
+                    <SelectItem value="breeze">Breeze</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
