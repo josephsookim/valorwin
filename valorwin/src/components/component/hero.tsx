@@ -20,15 +20,6 @@ export function Hero() {
                         Leverage our advanced machine learning models to predict the win probability for any Valorant match.
                         Get insights to improve your team's strategy and performance.
                         </p>
-                        <div className="mt-6">
-                        <Link
-                            href="#"
-                            className="inline-flex h-10 items-center justify-center rounded-md bg-primary-foreground px-8 text-sm font-medium text-primary shadow transition-colors hover:bg-primary-foreground/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-                            prefetch={false}
-                        >
-                            Try the Prediction Tool
-                        </Link>
-                        </div>
                     </div>
                     <div className="hidden md:block">
                         <img
