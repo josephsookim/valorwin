@@ -9,6 +9,11 @@ with open('./models/map_outcome_model.pkl', 'rb') as f:
     map_rf = pickle.load(f)
 
 
+@app.route('/', methods=['GET'])
+def home():
+    return "This is the ValorWin API."
+
+
 @app.route('/predict', methods=['POST'])
 def predict():
     # Get the JSON data from the request
