@@ -16,25 +16,11 @@ export function Header() {
         </Link>
         <nav className="ml-auto flex gap-4 sm:gap-6">
             <Link
-            href="#"
+            href="https://discord.com/invite/pCQyBd5zw9"
             className="text-sm font-medium hover:underline underline-offset-4 text-gray-900"
             prefetch={false}
             >
-            Prediction Tool
-            </Link>
-            <Link
-            href="#"
-            className="text-sm font-medium hover:underline underline-offset-4 text-gray-900"
-            prefetch={false}
-            >
-            About
-            </Link>
-            <Link
-            href="#"
-            className="text-sm font-medium hover:underline underline-offset-4 text-gray-900"
-            prefetch={false}
-            >
-            Contact
+            Discord
             </Link>
         </nav>
     </header>
