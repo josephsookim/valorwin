@@ -15,7 +15,7 @@ export function HowItWorks() {
             How it Works
           </h2>
           <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-            Our Valorant match prediction tool leverages historical data and advanced machine learning models to
+            Our Valorant match prediction tool leverages historical data and machine learning to
             provide accurate win probability estimates for any given match.
           </p>
         </div>
@@ -25,33 +25,23 @@ export function HowItWorks() {
               <DatabaseIcon className="w-12 h-12 mx-auto text-primary" />
               <h3 className="text-xl font-semibold mt-4 text-foreground">Extensive Data</h3>
               <p className="text-muted-foreground">
-                We collect and analyze millions of Valorant match data points to train our prediction models.
+                We collected and analyzed almost 500,000 rounds of Valorant from the T1, T2, and collegiate scene.
               </p>
             </div>
             <div className="bg-muted rounded-lg p-6 text-center">
               <CpuIcon className="w-12 h-12 mx-auto text-primary" />
-              <h3 className="text-xl font-semibold mt-4 text-foreground">Advanced Models</h3>
+              <h3 className="text-xl font-semibold mt-4 text-foreground">Machine Learning</h3>
               <p className="text-muted-foreground">
-                Our team of data scientists continuously improve our machine learning algorithms to provide the most
-                accurate predictions.
+              Our Random Forest Classification model analyzes complex, high-dimensional data to capture non-linear relationships.
               </p>
             </div>
             <div className="bg-muted rounded-lg p-6 text-center">
               <GaugeIcon className="w-12 h-12 mx-auto text-primary" />
               <h3 className="text-xl font-semibold mt-4 text-foreground">Reliable Insights</h3>
               <p className="text-muted-foreground">
-                Get data-driven insights to help your team make informed decisions and improve their performance.
+                Understand your team’s chances with precise win probability estimates.
               </p>
             </div>
-          </div>
-          <div className="flex justify-center">
-            <Link
-              href="#"
-              className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-              prefetch={false}
-            >
-              Learn More
-            </Link>
           </div>
         </div>
       </div>
