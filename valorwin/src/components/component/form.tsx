@@ -17,6 +17,8 @@ export function Form() {
     notes: ''
   });
 
+  const [errors, setErrors] = useState<string[]>([]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
     setFormData(prevState => ({
@@ -32,31 +34,57 @@ export function Form() {
     }));
   };
 
+  const validateForm = () => {
+    const errors: string[] = [];
+
+    // Validate rounds won are integers between 0 and 12
+    if (isNaN(parseInt(formData.team1Rounds, 10)) || parseInt(formData.team1Rounds, 10) < 0 || parseInt(formData.team1Rounds, 10) > 12) {
+      errors.push("Team 1 Rounds Won must be an integer between 0 and 12.");
+    }
+    if (isNaN(parseInt(formData.team2Rounds, 10)) || parseInt(formData.team2Rounds, 10) < 0 || parseInt(formData.team2Rounds, 10) > 12) {
+      errors.push("Team 2 Rounds Won must be an integer between 0 and 12.");
+    }
+
+    // Ensure all required fields are filled
+    if (!formData.team1Loadout) errors.push("Team 1 Loadout is required.");
+    if (!formData.team2Loadout) errors.push("Team 2 Loadout is required.");
+    if (!formData.map) errors.push("Map selection is required.");
+
+    setErrors(errors);
+
+    return errors.length === 0;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
+    if (!validateForm()) {
+      console.error("Validation failed");
+      return;
+    }
+
     // Create the data object based on form data
     const data = {
-      'team_score': parseInt(formData.team1Rounds, 10),
-      'enemy_score': parseInt(formData.team2Rounds, 10),
-      'team_loadout_eco': formData.team1Loadout === "team_loadout_eco",
-      'team_loadout_full-buy': formData.team1Loadout === "team_loadout_full_buy",
-      'team_loadout_semi-buy': formData.team1Loadout === "team_loadout_semi_buy",
-      'team_loadout_semi-eco': formData.team1Loadout === "team_loadout_semi_eco",
-      'enemy_loadout_eco': formData.team2Loadout === "team_loadout_eco",
-      'enemy_loadout_full-buy': formData.team2Loadout === "team_loadout_full_buy",
-      'enemy_loadout_semi-buy': formData.team2Loadout === "team_loadout_semi_buy",
-      'enemy_loadout_semi-eco': formData.team2Loadout === "team_loadout_semi_eco",
-      'map_name_Ascent': formData.map === "ascent",
-      'map_name_Bind': formData.map === "bind",
-      'map_name_Breeze': formData.map === "breeze",
-      'map_name_Fracture': formData.map === "fracture",
-      'map_name_Haven': formData.map === "haven",
-      'map_name_Icebox': formData.map === "icebox",
-      'map_name_Lotus': formData.map === "lotus",
-      'map_name_Pearl': formData.map === "pearl",
-      'map_name_Split': formData.map === "split",
-      'map_name_Sunset': formData.map === "sunset",
+      team_score: parseInt(formData.team1Rounds, 10),
+      enemy_score: parseInt(formData.team2Rounds, 10),
+      team_loadout_eco: formData.team1Loadout === "team_loadout_eco",
+      team_loadout_full_buy: formData.team1Loadout === "team_loadout_full_buy",
+      team_loadout_semi_buy: formData.team1Loadout === "team_loadout_semi_buy",
+      team_loadout_semi_eco: formData.team1Loadout === "team_loadout_semi_eco",
+      enemy_loadout_eco: formData.team2Loadout === "team_loadout_eco",
+      enemy_loadout_full_buy: formData.team2Loadout === "team_loadout_full_buy",
+      enemy_loadout_semi_buy: formData.team2Loadout === "team_loadout_semi_buy",
+      enemy_loadout_semi_eco: formData.team2Loadout === "team_loadout_semi_eco",
+      map_name_Ascent: formData.map === "ascent",
+      map_name_Bind: formData.map === "bind",
+      map_name_Breeze: formData.map === "breeze",
+      map_name_Fracture: formData.map === "fracture",
+      map_name_Haven: formData.map === "haven",
+      map_name_Icebox: formData.map === "icebox",
+      map_name_Lotus: formData.map === "lotus",
+      map_name_Pearl: formData.map === "pearl",
+      map_name_Split: formData.map === "split",
+      map_name_Sunset: formData.map === "sunset",
     };
 
     // Call the getPrediction function with the data
@@ -69,29 +97,29 @@ export function Form() {
   };
 
   // Prediction Request Function
-async function getPrediction(data: Record<string, any>) {
-  const url = "https://valorwin.onrender.com/predict";
+  async function getPrediction(data: Record<string, any>) {
+    const url = "https://valorwin.onrender.com/predict";
 
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      console.error("Error fetching prediction:", error);
+      return null;
     }
-
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    console.error("Error fetching prediction:", error);
-    return null;
   }
-}
 
   return (
     <section id="prediction-tool" className="w-full py-12 md:py-24 lg:py-32 bg-muted">
@@ -105,6 +133,16 @@ async function getPrediction(data: Record<string, any>) {
           </p>
         </div>
         <form onSubmit={handleSubmit} className="mx-auto max-w-2xl w-full grid gap-6">
+          {errors.length > 0 && (
+            <div className="text-red-600">
+              Errors:
+              <ul>
+                {errors.map((error, index) => (
+                  <li key={index}>{error}</li>
+                ))}
+              </ul>
+            </div>
+          )}
           <div className="grid grid-cols-2 gap-4">
             <div>
               <Label htmlFor="team1Loadout">Team 1 Loadout</Label>
