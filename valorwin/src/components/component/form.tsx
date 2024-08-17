@@ -73,6 +73,7 @@ export function Form() {
         <form onSubmit={handleSubmit} className="mx-auto max-w-2xl w-full grid gap-6">
           {errors.length > 0 && (
             <div className="bg-red-100 text-red-700 p-4 rounded mb-4">
+              Errors:
               <ul>
                 {errors.map((error, index) => (
                   <li key={index}>{error}</li>
