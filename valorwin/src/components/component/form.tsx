@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectItem } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import Modal from '@/components/component/modal';
 
 export function Form() {
   const [formData, setFormData] = useState({
@@ -18,6 +19,12 @@ export function Form() {
   });
 
   const [errors, setErrors] = useState<string[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [predictionResult, setPredictionResult] = useState({
+    mapWinner: 0,
+    team1WinProb: 0,
+    team2WinProb: 0,
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
@@ -88,11 +95,15 @@ export function Form() {
     };
 
     // Call the getPrediction function with the data
-    const predictionResult = await getPrediction(data);
+    const prediction = await getPrediction(data);
 
-    if (predictionResult) {
-      console.log("Prediction result:", predictionResult);
-      // You can update the UI with the prediction result here
+    if (prediction) {
+      setPredictionResult({
+        mapWinner: prediction.map_winner,
+        team1WinProb: prediction.team1_win_probability,
+        team2WinProb: prediction.team2_win_probability,
+      });
+      setIsModalOpen(true);
     }
   };
 
@@ -214,6 +225,13 @@ export function Form() {
           </div>
         </form>
       </div>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        mapWinner={predictionResult.mapWinner}
+        team1WinProb={predictionResult.team1WinProb}
+        team2WinProb={predictionResult.team2WinProb}
+      />
     </section>
   );
 }
