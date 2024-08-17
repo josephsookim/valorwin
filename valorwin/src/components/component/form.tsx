@@ -17,6 +17,8 @@ export function Form() {
     notes: ''
   });
 
+  const [errors, setErrors] = useState<string[]>([]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
     setFormData(prevState => ({
@@ -32,10 +34,29 @@ export function Form() {
     }));
   };
 
+  const validateForm = () => {
+    const errorList = [];
+
+    if (!formData.team1Loadout) errorList.push("Team 1 Loadout is required.");
+    if (!formData.team2Loadout) errorList.push("Team 2 Loadout is required.");
+    if (!formData.team1Rounds) errorList.push("Team 1 Rounds Won is required.");
+    if (!formData.team2Rounds) errorList.push("Team 2 Rounds Won is required.");
+    if (!formData.map) errorList.push("Map selection is required.");
+
+    return errorList;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you can handle the form submission, e.g., sending the data to a backend.
-    console.log('Form data submitted:', formData);
+    const validationErrors = validateForm();
+    
+    if (validationErrors.length > 0) {
+      setErrors(validationErrors);
+    } else {
+      setErrors([]);
+      // Proceed with form submission, e.g., send data to a backend.
+      console.log('Form data submitted:', formData);
+    }
   };
 
   return (
@@ -50,6 +71,15 @@ export function Form() {
           </p>
         </div>
         <form onSubmit={handleSubmit} className="mx-auto max-w-2xl w-full grid gap-6">
+          {errors.length > 0 && (
+            <div className="bg-red-100 text-red-700 p-4 rounded mb-4">
+              <ul>
+                {errors.map((error, index) => (
+                  <li key={index}>{error}</li>
+                ))}
+              </ul>
+            </div>
+          )}
           <div className="grid grid-cols-2 gap-4">
             <div>
               <Label htmlFor="team1Loadout">Team 1 Loadout</Label>
